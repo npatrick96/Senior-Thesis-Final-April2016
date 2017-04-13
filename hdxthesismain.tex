@@ -1,0 +1,81 @@
+\documentclass[12pt]{hdxthesis}  % default square logo 
+
+%load any additional packages
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{listings}
+\lstset{
+basicstyle=\small\ttfamily,
+columns=flexible,
+breaklines=true
+}
+
+\newcommand{\etal}{\emph{et al.}\xspace}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}\nolimits}
+%input macros (i.e. write your own macros file called mymacros.tex 
+%and uncomment the next line)
+%\include{mymacros}
+
+\title{\LARGE Kinyarwanda | English Translator\\[1ex]     %your thesis title,
+       \Large A Statistical Machine Learning Approach}  %note \\[1ex] is a line break in the title
+
+\author{Patrick Niyongabo}             %your name
+\college{Hendrix College}  %your college
+
+%\renewcommand{\submittedtext}{change the default text here if needed}
+\degree{Bachelor of Arts in Computer Science}     %the degree
+\degreedate{May 2017}         %the degree date
+
+%end the preamble and start the document
+\begin{document}
+
+%this baselineskip gives sufficient line spacing for an examiner to easily
+%markup the thesis with comments
+\baselineskip=18pt plus1pt
+
+%set the number of sectioning levels that get number and appear in the contents
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% added from http://tex.stackexchange.com/questions/5223/command-for-argmin-or-argmax/284054#284054
+%\DeclareMathOperator*{\argminA}{arg\,min} % Jan Hlavacek % thin space, limits underneath in displays
+
+\maketitle                  % create a title page from the preamble info
+\include{dedication}        % include a dedication.tex file
+\include{acknowlegements}   % include an acknowledgements.tex file
+\include{abstract}          % include the abstract
+
+\begin{romanpages}          % start roman page numbering
+\tableofcontents            % generate and include a table of contents
+\listoffigures              % generate and include a list of figures
+\end{romanpages}            % end roman page numbering
+
+%now include the files of latex for each of the chapters etc
+\include{ch1_introduction} % introduction
+\include{chapter2} 
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6} 
+\include{conclusions} % then conclude
+
+
+
+
+%\usepackage{fancyvrb}
+%now enable appendix numbering format and include any appendices
+\appendix
+\include{appendix1}
+\include{appendix2}
+
+%next line adds the Bibliography to the contents page
+\addcontentsline{toc}{chapter}{Bibliography}
+%uncomment next line to change bibliography name to references
+%\renewcommand{\bibname}{References}
+\bibliography{refs}        %use a bibtex bibliography file refs.bib
+\bibliographystyle{plain}  %use the plain bibliography style
+
+\end{document}
+

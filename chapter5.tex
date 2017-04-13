@@ -1,0 +1,31 @@
+\chapter{Rule-Based Machine Translation} % PROVIDE 5 CITATIONS TOTAL
+After realizing that finding Kinyarwanda | English translation data couldn't possibly be achieved with the time and other resources I had allocated for this project, I started working on a rule-based machine translation(RBMT) model. To develop an English to Kinyarwanda RBMT model, I used a word-by-word translation dictionaries from the \textit{SmartRwanda} translation engine\footnote{https://smartrwanda.org/translate}; then I wrote a python program that takes an English sentence as input, lowercase it, split it into a list of words, and for each word in that list, check to see if it is in the translation dictionary, if yes translate it, and if not, just return it as it is. After this process is over, the resulting translated and non-translated words are all joined together into a pseudo-Kinyarwanda sentence and returned as a string.
+
+Even though the concept of RBMT sounds easy that it can be summarized and explained in a few sentences; for the sake of clarity, I will split and describe it in two sections: data collection and model implementation. 
+\section{Collecting Translation Data}
+First, I dealt with the challenge of getting a decent amount of translation data of words and expressions. Even the data that I got from \textit{SmartRwanda} contained false translations and translations and several errors. To save time, I ignored the errors and used it anyway because I was more interested in analyzing the behavior of the RBMT model more than I was interested in the complete accuracy of the translations results.
+\section{Implementing the Translation Program}
+Second, I implemented a Python program\footnote{The source and data files I used to make the translator are publicly available and accessible on my Github account. Link: \url{https://github.com/npatrick96/kinyarwandaRBMT}.} for the actual translation process. My implementation of the program consisted of three main components. The ﬁrst step cleans the input by lower-casing it, and then removing all trailing spaces and punctuations. In the second step, the cleaned input is translated to Kinyarwanda word by word by looking up each word in the translation dictionary. In the third step, the program attempts to improve the translation by following the provided translation rules by adding, modifying, re-arranging or removing some parts of the output Kinyarwanda sentence to be returned by the program.
+
+From my experience, the first and second components are easy to implement and not as important as the third one when working with a non-trivial implementation of an RBMT model. In my case, working on the third component was additionally challenging due to both my limited experience in the study of linguistics (incl. both English and Kinyarwanda), and the scarcity (and poor quality) of the translation data I was working with. However, despite these constraints, I managed to program simple rules to handle a few useful cases such plural forms in English and noun + adjective alignments plus ignoring articles in Kinyarwanda. This helped in improving the translation results as it can be seen in the example shown below.
+\begin{lstlisting}
+English sentences to translate to Kinyarwanda.
+1. Hello, my name is Patrick. Good morning!
+2. laws are heavier than stones
+
+Translations before the implementation of the third component.
+1. hello , my izina is patrick . cyiza igitondo ! 
+2. laws kuri heavier kuruta stones
+
+Translations after the implementation of the third component.
+1. hello , my izina is patrick . igitondo cyiza !  
+2. itegeko kuri heavier kuruta ibuye 
+\end{lstlisting}
+From the previous example, one notices that even though the implementation of additional rules can improve the overall quality of translation results, one ought to be careful when implementing these rules as they can easily break the existing structure of the whole model. Therefore each additional rule should be examined and tested to make sure it does not conﬂict with existing rules.  If it does, it is necessary to make sure that it actually improves the existing model. For example, after I added a new rule that appends an ``s" to the end of each English word and used it to create a new vocabulary entry to handle plural forms, I realized that this rule doesn't help at all with words with irregular plural forms, and that it was causing translation errors for English words whose singular Kinyarwanda translations are very different from their plural translation. 
+
+For example, the translation of ``law" is ``itegeko", but as I only have an entry for the word ``law" and not its plural form ``laws", my RBMT model wasn't able to translate ``laws" before I added a rule that took care of plural forms. However, even though the final translation of ``rules" as ``itegeko" is slightly incorrect\footnote{The grammatically-correct Kinyarwanda translation of ``laws" is ``amategeko".}, it is definitely better than having no translation at all.  
+
+Another example on the usefulness of extra rules can be seen in the translation of ``good morning". In Kinyarwanda, unlike in English, adjectives come after the nouns they are describing. Therefore, with ``good" = ``cyiza" and ``igitondo" = ``morning", the correct translation of ``good morning" is ``igitondo cyiza" instead of ``cyiza igitondo".
+
+To program this into my model, I created a list that contained adjectives, and when re-joining translated words into a new sentence, the program had to check if the current word being added to the sentence was an adjective and switch it with the following one. However this posed a few challenges as in the case in which two or more adjectives are used to describe the same word or the case in which the adjective is used at the end of a sentence, e.g.: the car is fast. These cases or similar ones can be handled by writing new rules or existing ones or ignored if they don't occur as often or if their impact on the translation quality is insignificant.
+%%%%%%%%%%%%%%
