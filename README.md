@@ -6,8 +6,8 @@
 
 Full Paper: http://patrickniyongabo.com/pdf/senior-thesis-paper-final.pdf
 
-SMT: https://github.com/npatrick96/kinyarwandaSMT
+SMT: https://github.com/pniyongabo/kinyarwandaSMT
 
-RBMT: https://github.com/npatrick96/kinyarwandaRBMT
+RBMT: https://github.com/pniyongabo/kinyarwandaRBMT
 
 Project Website: http://kinyarwanda.online/
