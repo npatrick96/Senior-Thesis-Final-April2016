@@ -10,5 +10,3 @@ Full Paper: https://github.com/pniyongabo/SeniorThesisPaper/blob/master/finalCop
 SMT: https://github.com/pniyongabo/kinyarwandaSMT
 
 RBMT: https://github.com/pniyongabo/kinyarwandaRBMT
-
-Project Website: http://kinyarwanda.online/
